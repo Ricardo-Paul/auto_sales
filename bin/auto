@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+require './lib/auto_sales'
+
+AutoSales::CLI.new.call
