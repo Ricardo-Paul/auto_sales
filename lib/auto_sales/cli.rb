@@ -1,39 +1,38 @@
 
 class AutoSales::CLI
 
-
     def call
         list_auto
         menu
     end
 
     def list_auto
-        puts <<-DOC
-            Cars Model - Select the car you want more info on
-        car_1 = model - sales - Assembly
-        car_2 = model - sales - Assembly
-        car_3 = model - sales - Assembly
-        DOC
+        @cars = AutoSales::Car.car_info
+        @cars.each.with_index(1) {|car, i| puts " #{i}. #{car.model}"}
     end
-
 
     def menu
-        puts" Enter the number of car to have more info"
-        input = gets.strip
+puts" Enter the number of car to have more info / and 'show' to display the list "
+        input = nil
+        while  input != "exit"
+            
+            input = gets.strip
+            if input.to_i > 0
+                selected_car = @cars[input.to_i - 1]
+                puts "-----------------------------------------------------------"
+                puts " MODEL |    SALES             | ASSEEMBLY (country)"
+                puts "-----------------------------------------------------------"
 
-        while  "exit"
-            case input
-                when "1"
-                    puts "more info on car_1"
-                when "2"
-                    puts "More info on car_2"
-                when "3"
-                    puts "more info on car_3"
+                puts "#{selected_car.model} - #{selected_car.sales} - #{selected_car.assembly}"
+            elsif input == "show"
+                puts "-------------"
+                puts " MODELS ONLY"
+                puts "------------"
+                list_auto
+            else
+                puts "Please enter a valid number"
             end
         end
-
- 
     end
-
 
   end
